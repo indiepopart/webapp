@@ -3,12 +3,15 @@ spring:
     jdbc:
       initialize-schema: always
   datasource:
-    url: jdbc:mysql://localhost:3306/webapp
+    url: jdbc:mysql://localhost:3306/
     username: root
     password: example
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      initializationFailTimeout: 0
 
 logging:
   level:
-    org.springframework: DEBUG
+    org.springframework: INFO
+    com.zaxxer.hikari: DEBUG
 

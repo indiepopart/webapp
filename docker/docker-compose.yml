@@ -3,6 +3,16 @@ version: '3.1'
 
 services:
 
+  web:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile-webapp
+    image: webapp
+    ports:
+      - 8080:8080
+    depends_on:
+      - "db"
+
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
