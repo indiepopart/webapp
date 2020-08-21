@@ -3,13 +3,16 @@ version: '3.1'
 
 services:
 
+
   web:
-    build:
-      context: ..
-      dockerfile: ./docker/Dockerfile-webapp
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/webapp
+      - OKTA_OAUTH2_ISSUER=${OKTA_OAUTH2_ISSUER}
+      - OKTA_OAUTH2_CLIENT_ID=${OKTA_OAUTH2_CLIENT_ID}
+      - OKTA_OAUTH2_CLIENT_SECRET=${OKTA_OAUTH2_CLIENT_SECRET}
     image: webapp
     ports:
-      - 8080:8080
+      - 8080-8082:8080
     depends_on:
       - "db"
 
@@ -19,6 +22,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: webapp
     ports:
       - 3306:3306
 
