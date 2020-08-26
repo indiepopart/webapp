@@ -4,7 +4,7 @@ version: '3.1'
 services:
 
 
-  web:
+  web1:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/webapp
       - OKTA_OAUTH2_ISSUER=${OKTA_OAUTH2_ISSUER}
@@ -12,7 +12,29 @@ services:
       - OKTA_OAUTH2_CLIENT_SECRET=${OKTA_OAUTH2_CLIENT_SECRET}
     image: webapp
     ports:
-      - 8081-8083:8080
+      - 8081:8080
+    depends_on:
+      - "db"
+  web2:
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/webapp
+      - OKTA_OAUTH2_ISSUER=${OKTA_OAUTH2_ISSUER}
+      - OKTA_OAUTH2_CLIENT_ID=${OKTA_OAUTH2_CLIENT_ID}
+      - OKTA_OAUTH2_CLIENT_SECRET=${OKTA_OAUTH2_CLIENT_SECRET}
+    image: webapp
+    ports:
+      - 8082:8080
+    depends_on:
+      - "db"
+  web3:
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/webapp
+      - OKTA_OAUTH2_ISSUER=${OKTA_OAUTH2_ISSUER}
+      - OKTA_OAUTH2_CLIENT_ID=${OKTA_OAUTH2_CLIENT_ID}
+      - OKTA_OAUTH2_CLIENT_SECRET=${OKTA_OAUTH2_CLIENT_SECRET}
+    image: webapp
+    ports:
+      - 8083:8080
     depends_on:
       - "db"
 
@@ -40,4 +62,6 @@ services:
     ports:
       - 80:80
     depends_on:
-      - "web"
+      - "web1"
+      - "web2"
+      - "web3"
