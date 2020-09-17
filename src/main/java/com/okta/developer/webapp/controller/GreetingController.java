@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import java.net.InetAddress;
 
@@ -26,7 +27,8 @@ public class GreetingController {
         } catch (Exception e){
             logger.error("Could not get hostname", e);
         }
+        String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
         logger.info("Request responded by " + serverUsed);
-        return "Hello " + oidcUser.getFullName() + ", you are connected to " + serverUsed;
+        return "Hello " + oidcUser.getFullName() + ", you are connected to " + serverUsed + ", with sessionId " + sessionId;
     }
 }
